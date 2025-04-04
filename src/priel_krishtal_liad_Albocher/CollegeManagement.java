@@ -1,10 +1,20 @@
 package priel_krishtal_liad_Albocher;
-
+import java.util.Scanner;
 public class CollegeManagement {
-    private String collageName;
+    private String collegeName;
+    private Lecturer[] lecturers;
+    private Department[] departments;
+    private Committee[] committees;
+    private int numLecturers, numDepartments, numCommittees;
 
     public CollegeManagement(String name){
-        this.name = name;
+        this.collegeName = name;
+        lecturers = new Lecturer[1];
+        departments = new Department[1];
+        committees = new Committee[1];
+        numLecturers = 0;
+        numDepartments = 0;
+        numCommittees = 0;
         menu();
     }
 
@@ -35,82 +45,43 @@ public class CollegeManagement {
             s.nextLine();  // Consume newline
             switch (choice) {
                 case 0:
-                    // Exit program
-                    System.out.println("Exiting Program.");
+                    // Exit
                     break;
                 case 1:
-                    String newLecturer;
-                    do {
-                        System.out.print("Enter Lecturer name: ");
-                        newLecturer = s.nextLine();
-                        if (isStrInArr(lecturers, newLecturer)) {
-                            System.out.println("Lecturer name already exists! Please enter a new name.");
-                        }
-                    } while (isStrInArr(lecturers, newLecturer));
-                    lecturers = insertToArr(lecturers, numLecturers, newLecturer);
-                    numLecturers++;
+                    // Add Lecturer
                     break;
                 case 2:
-                    String newCommittee;
-                    do {
-                        System.out.print("Enter Committee name: ");
-                        newCommittee = s.nextLine();
-                        if (isStrInArr(committees, newCommittee)) {
-                            System.out.println("Committee name already exists! Please enter a new name.");
-                        }
-                    } while (isStrInArr(committees, newCommittee));
-                    committees = insertToArr(committees, numCommittees, newCommittee);
-                    numCommittees++;
+                    // Add Committee
                     break;
                 case 3:
-                    String newDepartment;
-                    do {
-                        System.out.print("Enter Department name: ");
-                        newDepartment = s.nextLine();
-                        if (isStrInArr(departments, newDepartment)) {
-                            System.out.println("Department name already exists! Please enter a new name.");
-                        }
-                    } while (isStrInArr(departments, newDepartment));
-                    departments = insertToArr(departments, numDepartments, newDepartment);
-                    numDepartments++;
+                    // Add a member to the committee
                     break;
                 case 4:
-                    // Assign Lecturer to Committee
-                    System.out.print("Enter Lecturer name:");
-                    String lecturerToAdd= s.nextLine();  // Read user input
-                    if(!isStrInArr(lecturers,lecturerToAdd)){
-                        System.out.println("Error! given Lecturer doesnt exists");
-                        break;
-                    }
-
-                    System.out.print("Enter Committee name:");
-                    String committee= s.nextLine();  // Read user input
-                    if(!isStrInArr(committees,committee)){
-                        System.out.println("Error! given committee doesnt exists");
-                        break;
-                    }
+                    // Update head of committee
                     break;
                 case 5:
-                    // Show Average Salary of All Lecturers (Not Implemented)
-                    System.out.print("Average Salary of All Lecturers (Not Implemented)");
+                    // Remove a member from the committee
                     break;
                 case 6:
-                    // Show Average Salary of a Department (Not Implemented)
-                    System.out.print("Average Salary of a Department (Not Implemented)");
+                    // Add department
                     break;
                 case 7:
-                    // Show All Lecturers
-                    printArr(lecturers,numLecturers);
+                    // Show Average Salary of All Lecturers
                     break;
                 case 8:
-                    // Show All Committees
-                    printArr(committees,numCommittees);
+                    // Show Average Salary of a chosen Department
+                    break;
+                case 9:
+                    // Display full details for all lecturers
+                    break;
+                case 10:
+                    // Display full details for all committees
                     break;
                 default:
-                    // Invalid input
-                    System.out.println("Invalid choice. Please try again(0-8)");
+                    // Option not recognized
                     break;
-            } 
+            }
+            
            
             
            

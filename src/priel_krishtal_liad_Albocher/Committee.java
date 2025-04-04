@@ -5,7 +5,7 @@ public class Committee {
     private Lecturer[] lecturers;
     private Lecturer headOfComm;
 
-    public Commitees(String name, String[] lecturers, String headOfComm){
+    public Committee(String name, Lecturer[] lecturers, Lecturer headOfComm){
         this.name = name;
         this.lecturers = lecturers;
         this.headOfComm = headOfComm;

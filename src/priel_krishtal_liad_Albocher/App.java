@@ -6,7 +6,7 @@ public class App {
          // Submitters: Priel Krishtal , Liad Albocher
         Scanner s = new Scanner(System.in);
         System.out.print("Enter Collage name:");
-		collegeName = s.nextLine();
+		String collegeName = s.nextLine();
         CollegeManagement currentCollage = new CollegeManagement(collegeName);
         s.close();
     }
