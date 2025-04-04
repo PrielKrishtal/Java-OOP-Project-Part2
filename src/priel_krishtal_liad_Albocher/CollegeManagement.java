@@ -17,6 +17,65 @@ public class CollegeManagement {
         numCommittees = 0;
         menu();
     }
+    public static Lecturer[] resizeLecturerArray(Lecturer[] arr) {
+        Lecturer[] newArr = new Lecturer[arr.length * 2];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i];
+        }
+        return newArr;
+    }
+    
+    
+    public Lecturer createLecturer() {
+        Scanner s = new Scanner(System.in);
+        Lecturer lecturer = new Lecturer();
+        
+        String lecturerName;
+        do {
+            System.out.print("Enter lecturer name: ");
+            lecturerName = s.nextLine();
+            if (nameExists(lecturerName)) {
+                System.out.println("Lecturer name already exists! Please enter a new name.");
+            }
+        } while (nameExists(lecturerName));
+        lecturer.setName(lecturerName);
+        
+        System.out.print("Enter lecturer ID: ");
+        int lecturerId = s.nextInt();
+        s.nextLine(); // Consume newline
+        lecturer.setId(lecturerId);  // Set the ID
+        
+        System.out.print("Enter lecturer degree: ");
+        String lecturerDegree = s.nextLine();
+        lecturer.setDegree(lecturerDegree);
+        
+        System.out.print("Enter lecturer profession: ");
+        String lecturerProfession = s.nextLine();
+        lecturer.setProfession(lecturerProfession);
+        
+        // Now create the Lecturer object
+       
+        System.out.println("Lecturer added successfully.");
+        return lecturer;
+    }
+    
+    // Adds a new Lecturer after checking and resizing if necessary
+    public void addLecturer(Lecturer lecturer) {
+        if (numLecturers >= lecturers.length) {
+            lecturers = resizeLecturerArray(lecturers);
+        }
+        lecturers[numLecturers++] = lecturer;
+    }
+
+
+    public boolean nameExists(String name) {
+        for (int i = 0; i < numLecturers; i++) {
+            if (lecturers[i].getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void menu(){
         Scanner s = new Scanner(System.in);
@@ -49,6 +108,8 @@ public class CollegeManagement {
                     break;
                 case 1:
                     // Add Lecturer
+                    Lecturer newLecturer = createLecturer();
+                    addLecturer(newLecturer);
                     break;
                 case 2:
                     // Add Committee
