@@ -1,17 +1,12 @@
 package priel_krishtal_liad_Albocher;
-import java.util.Scanner;
 public class Lecturer {
     private String name;
     private int id;
     private String degree;
     private String profession;
     private Committee[] committees;
+    private int numCommittees;
     private Department department;
-
-    //default constructor
-    public Lecturer() {
-        
-    }
 
 
     public Lecturer(String name, int id, String degree, String profession, Committee[] committees, Department department) {
@@ -21,11 +16,26 @@ public class Lecturer {
         this.profession = profession;
         this.committees = committees;
         this.department = department;
+        committees = new Committee[1];
+        numCommittees = 0;
     }
-    
-   
 
-    // update the set functions to be boolean and test input
+    public String toString(){
+        String strCommittiees = "";
+        String str = "name: " + this.name + " id: " + this.id + " degree: " + this.degree + " profession: " + this.profession;
+        if (numCommittees > 0){
+            for (int i = 0; i < numCommittees; i++) {
+                strCommittiees += this.committees[i].getName();
+            }
+            str += "committees: " + strCommittiees;
+        }
+        if (this.department != null){
+            str += "department: " + this.department;
+        }
+        return str;
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,7 +59,4 @@ public class Lecturer {
     public String getName() {
         return name;
     }
-
-
-    
 }

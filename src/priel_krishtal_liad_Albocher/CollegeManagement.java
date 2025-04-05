@@ -28,7 +28,6 @@ public class CollegeManagement {
     
     public Lecturer createLecturer() {
         Scanner s = new Scanner(System.in);
-        Lecturer lecturer = new Lecturer();
         
         String lecturerName;
         do {
@@ -38,28 +37,23 @@ public class CollegeManagement {
                 System.out.println("Lecturer name already exists! Please enter a new name.");
             }
         } while (nameExists(lecturerName));
-        lecturer.setName(lecturerName);
         
         System.out.print("Enter lecturer ID: ");
         int lecturerId = s.nextInt();
-        s.nextLine(); // Consume newline
-        lecturer.setId(lecturerId);  // Set the ID
+        s.nextLine();
         
         System.out.print("Enter lecturer degree: ");
         String lecturerDegree = s.nextLine();
-        lecturer.setDegree(lecturerDegree);
         
         System.out.print("Enter lecturer profession: ");
         String lecturerProfession = s.nextLine();
-        lecturer.setProfession(lecturerProfession);
         
-        // Now create the Lecturer object
        
         System.out.println("Lecturer added successfully.");
+        Lecturer lecturer = new Lecturer(lecturerName, lecturerId, lecturerDegree, lecturerProfession, null, null);
         return lecturer;
     }
     
-    // Adds a new Lecturer after checking and resizing if necessary
     public void addLecturer(Lecturer lecturer) {
         if (numLecturers >= lecturers.length) {
             lecturers = resizeLecturerArray(lecturers);
@@ -80,8 +74,7 @@ public class CollegeManagement {
     public void menu(){
         Scanner s = new Scanner(System.in);
         int choice;
-        System.out.print("Enter choice: ");
-		collegeName = s.nextLine();
+        
         do{
 
             // Display menu
@@ -99,9 +92,8 @@ public class CollegeManagement {
             System.out.println("10 - display full details for all committees");
             System.out.print("Enter your choice: ");
 
-            // Read user choice
             choice = s.nextInt();
-            s.nextLine();  // Consume newline
+            s.nextLine(); 
             switch (choice) {
                 case 0:
                     // Exit
@@ -110,6 +102,7 @@ public class CollegeManagement {
                     // Add Lecturer
                     Lecturer newLecturer = createLecturer();
                     addLecturer(newLecturer);
+                    
                     break;
                 case 2:
                     // Add Committee
@@ -133,6 +126,9 @@ public class CollegeManagement {
                     // Show Average Salary of a chosen Department
                     break;
                 case 9:
+                    for (int i = 0; i < numLecturers; i++) {
+                        System.out.println(lecturers[i].toString());
+                    }
                     // Display full details for all lecturers
                     break;
                 case 10:
