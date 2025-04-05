@@ -10,4 +10,9 @@ public class Committee {
         this.lecturers = lecturers;
         this.headOfComm = headOfComm;
     }
+
+    public String getName() {
+        return name;
+    }
+    
 }
