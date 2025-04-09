@@ -16,24 +16,35 @@ public class Lecturer {
         this.profession = profession;
         this.committees = committees;
         this.department = department;
-        committees = new Committee[1];
+        this.committees = new Committee[1];
         numCommittees = 0;
     }
 
-    public String toString(){
-        String strCommittiees = "";
-        String str = "name: " + this.name + " id: " + this.id + " degree: " + this.degree + " profession: " + this.profession;
-        if (numCommittees > 0){
+    public String toString() {
+        String str = "Name: " + this.name + "\n" +
+                     "ID: " + this.id + "\n" +
+                     "Degree: " + this.degree + "\n" +
+                     "Profession: " + this.profession + "\n";
+    
+        if (numCommittees > 0) {
+            str += "Committees: ";
             for (int i = 0; i < numCommittees; i++) {
-                strCommittiees += this.committees[i].getName();
+                str += this.committees[i].getName();
+                if (i < numCommittees - 1) {
+                    str += ", ";
+                }
             }
-            str += "committees: " + strCommittiees;
+            str += "\n";
         }
-        if (this.department != null){
-            str += "department: " + this.department;
+    
+        if (this.department != null) {
+            str += "Department: " + this.department.getName() + "\n";
         }
+    
         return str;
     }
+    
+    
 
 
     public void setName(String name) {
@@ -59,4 +70,25 @@ public class Lecturer {
     public String getName() {
         return name;
     }
+
+    public Committee[] getCommittees() {
+        return committees;
+    }
+
+    public int getNumCommittees() {
+        return numCommittees;
+    }
+
+    public void setCommittees(Committee[] committees) {
+    this.committees = committees;
+    if (committees != null) {
+        this.numCommittees = committees.length;
+    } else {
+        this.numCommittees = 0;
+    }
+}
+
+    
+    
+    
 }

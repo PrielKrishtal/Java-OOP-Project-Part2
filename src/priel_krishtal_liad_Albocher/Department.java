@@ -9,6 +9,20 @@ public class Department {
         this.numOfStudents = numOfStudents;
         this.lecturers = lecturers;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumOfStudents() {
+        return numOfStudents;
+    }
+
+    public Lecturer[] getLecturers() {
+        return lecturers;
+    }
+
+    
     
 }
 
