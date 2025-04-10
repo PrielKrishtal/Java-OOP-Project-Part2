@@ -84,8 +84,21 @@ public class CollegeManagement {
         return null;
     }
     
-    
-    
+    public void addCommittee(Committee committee){
+        if (numLecturers >= committees.length) {
+            lecturers = resizeLecturerArray(lecturers);
+        }
+        committees[numLecturers++] = committee;
+    }
+   
+
+    public static Committee[] resizeCommitteesArray(Committee[] arr) {
+        Committee[] newArr = new Committee[arr.length * 2];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i];
+        }
+        return newArr;
+    }
     
     // ***************************************
     // Department functions

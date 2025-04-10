@@ -2,14 +2,14 @@ package priel_krishtal_liad_Albocher;
 public class Lecturer {
     private String name;
     private int id;
-    private String degree;
+    private Degree degree;
     private String profession;
     private Committee[] committees;
     private int numCommittees;
     private Department department;
 
 
-    public Lecturer(String name, int id, String degree, String profession, Committee[] committees, Department department) {
+    public Lecturer(String name, int id, Degree degree, String profession, Committee[] committees, Department department) {
         this.name = name;
         this.id = id;
         this.degree = degree;
@@ -47,6 +47,22 @@ public class Lecturer {
     
 
 
+    public int getId() {
+        return id;
+    }
+
+    public Degree getDegree() {
+        return degree;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -55,7 +71,7 @@ public class Lecturer {
         this.id = id;
     }
     
-    public void setDegree(String degree) {
+    public void setDegree(Degree degree) {
         this.degree = degree;
     }
     
