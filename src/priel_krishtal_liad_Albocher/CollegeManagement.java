@@ -40,15 +40,29 @@ public class CollegeManagement {
     public int getNumCommittees() {
         return numCommittees;}
     
+        
+    public void setLecturers(Lecturer[] lecturers) {
+        this.lecturers = lecturers;
+    }
+
+    public void setDepartments(Department[] departments) {
+        this.departments = departments;
+    }
+
+    public void setCommittees(Committee[] committees) {
+        this.committees = committees;
+    }
 
     // ***************************************
     // Lecturer functions
     // ***************************************
-    public void addLecturer(Lecturer lecturer) {
-        if (numLecturers >= lecturers.length) {
-            lecturers = resizeLecturerArray(lecturers);
+    public Lecturer[] addLecturer(Lecturer lecturer,Lecturer[] arrLect) {
+        if (numLecturers >= arrLect.length) {
+            arrLect = resizeLecturerArray(arrLect);
         }
-        lecturers[numLecturers++] = lecturer;
+        arrLect[numLecturers++] = lecturer;
+
+        return arrLect;//in order to implement the resizing we return by value
     }
 
     public static Lecturer[] resizeLecturerArray(Lecturer[] arr) {
@@ -84,11 +98,13 @@ public class CollegeManagement {
         return null;
     }
     
-    public void addCommittee(Committee committee){
-        if (numLecturers >= committees.length) {
-            lecturers = resizeLecturerArray(lecturers);
+    public Committee[] addCommittee(Committee committee,Committee[] arrComm){
+        if (numCommittees >= arrComm.length) {
+            arrComm = resizeCommitteesArray(arrComm);
         }
-        committees[numLecturers++] = committee;
+        arrComm[numCommittees++] = committee;
+        return arrComm;
+        
     }
    
 

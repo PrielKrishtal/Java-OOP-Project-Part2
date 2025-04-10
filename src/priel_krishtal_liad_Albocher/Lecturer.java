@@ -20,6 +20,17 @@ public class Lecturer {
         numCommittees = 0;
     }
 
+    public Lecturer(Lecturer other){
+        this.name = other.name;
+        this.id = other.id;
+        this.degree = other.degree;
+        this.profession = other.profession;
+        this.committees = other.committees;
+        this.department = other.department;
+        this.committees = other.committees;
+        this.numCommittees = other.numCommittees;
+    }
+
     public String toString() {
         String str = "Name: " + this.name + "\n" +
                      "ID: " + this.id + "\n" +
@@ -80,8 +91,15 @@ public class Lecturer {
     }
     
     public void setDepartment(Department department) {
-        this.department = department;
+        if(this.department == null){
+            this.department = department;
+        }
+        else
+            System.out.println("Cannot add more then 1 department for a lecturer");
+      
     }
+
+    
     
     public String getName() {
         return name;

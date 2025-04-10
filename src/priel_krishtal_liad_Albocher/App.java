@@ -105,8 +105,8 @@ public class App {
         Department chosenDepartment = chooseDepartment(college);
         
         System.out.println("Lecturer added successfully.");
-        Lecturer lecturer = new Lecturer(lecturerName, lecturerId, degree, lecturerProfession, lecturerCommittees, chosenDepartment);
-        return lecturer;
+        return new Lecturer(lecturerName, lecturerId, degree, lecturerProfession, lecturerCommittees, chosenDepartment);
+        
     }
 
 
@@ -180,10 +180,18 @@ public class App {
             return null;
         }
         
+        
         Scanner s = new Scanner(System.in);
         System.out.print("Enter committee name: ");
         String committeeName = s.nextLine();
-    
+        
+        
+        if(college.getNumLecturers() == 0){
+            System.out.print("Error : cant create committie since there are 0 lecturers");
+            return null;
+        }
+
+        
         while (college.findCommitteeByName(committeeName)!=null) {
             System.out.print("A committee with this name already exists. Enter a different name: ");
             committeeName = s.nextLine();
@@ -192,6 +200,13 @@ public class App {
         System.out.print("How many lecturers would you like to assign?: ");
         int numAssigned = s.nextInt();
         s.nextLine(); // Consume leftover newline
+
+        while (numAssigned <= 0 || numAssigned > college.getNumLecturers()) {
+            System.out.print("Invalid number. Please enter a number between 1 and " + college.getNumLecturers() + ": ");
+            numAssigned = s.nextInt();
+            s.nextLine();
+        }
+
         Lecturer[] assignedLecturers = new Lecturer[numAssigned];
 
         Lecturer chairPerson = getValidatedChairperson(college);
@@ -199,12 +214,16 @@ public class App {
         for(int i=0;i<numAssigned;i++){
             System.out.print("Enter the name of lecturer #"+(i+1)+": ");
             String lectName = s.nextLine();
-            while(college.findLecturerByName(lectName)==null){
-                System.out.println("Error: Lecturer not found. Please enter a valid lecturer name.");
-                lectName = s.nextLine();
-            }
-            while(lectName.equals(chairPerson.getName())){
-                System.out.println("Chairperson should not be in the list of committee members. enter the name of lecturer #"+(i+1)+":");
+            while(college.findLecturerByName(lectName)==null || lectName.equals(chairPerson.getName())){
+                
+                if(college.findLecturerByName(lectName)==null){
+                    System.out.println("Error: Lecturer not found. Please enter a valid lecturer name.");
+                }
+
+                else if(lectName.equals(chairPerson.getName())){
+                    System.out.println("Chairperson should not be in the list of committee members. enter the name of lecturer #"+(i+1)+":");
+                }
+
                 lectName = s.nextLine();
             }
 
@@ -214,6 +233,34 @@ public class App {
     }
     
     
+    public static void assignLectToCommittee(CollegeManagement college){
+        Scanner s = new Scanner(System.in);
+        String lecturerName, commName;
+        Lecturer lecturer;
+        do {
+            System.out.print("Enter lecturer name: ");
+            lecturerName = s.nextLine();
+            lecturer = college.findLecturerByName(lecturerName);
+            if (lecturer!=null) {
+                System.out.println("Lecturer name already exists! Please enter a new name.");
+            }
+        } while (lecturer!=null);
+          
+        Committee committee;
+        do {
+            System.out.print("Enter committee name: ");
+            commName = s.nextLine();
+            committee = college.findCommitteeByName(commName);
+    
+            if (committee == null) {
+                System.out.println("Committee not found. Please enter an existing committee name.");
+            }
+        } while (committee == null);
+        
+
+        college.addLecturer(lecturer, committee.getLecturers());
+        //important: in object committie assign the lecturer aswell
+    }
 
     // ***************************************
     // Department Creation functions
@@ -256,16 +303,17 @@ public class App {
                 case 1:
                     // Add Lecturer
                     Lecturer newLecturer = createLecturer(college);
-                    college.addLecturer(newLecturer);
+                    college.setLecturers((college.addLecturer(newLecturer,college.getLecturers())));
                     
                     break;
                 case 2:
                     // Add Committee
                     Committee newCommittee = createCommittee(college);
-                    college.addCommittee(newCommittee);
+                    college.setCommittees(college.addCommittee(newCommittee,college.getCommittees()));
                     break;
                 case 3:
                     // Add a member to the committee
+                    assignLectToCommittee(college);
                     break;
                 case 4:
                     // Update head of committee
@@ -291,9 +339,7 @@ public class App {
                 case 10:
                     // Display full details for all committees
                     break;
-                default:
-                    // Option not recognized
-                    break;
+                
             }
             
             
