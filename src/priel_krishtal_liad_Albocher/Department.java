@@ -22,7 +22,9 @@ public class Department {
         return lecturers;
     }
 
-    
+    public String toString(){
+        return ("Department's name is: " + name + "\nnumber of student is: " + numOfStudents);
+    }
     
 }
 
