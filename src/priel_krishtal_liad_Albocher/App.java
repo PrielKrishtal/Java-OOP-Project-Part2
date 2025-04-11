@@ -2,11 +2,11 @@ package priel_krishtal_liad_Albocher;
 import java.util.Scanner;
 
 public class App {
+    private static final Scanner s = new Scanner(System.in);
     // ***************************************
     // Lecturer Creation functions
     // ***************************************
     public static Committee getValidatedCommitteeByName(CollegeManagement college) {
-        Scanner s = new Scanner(System.in);
         Committee committee;
         String commName;
     
@@ -31,7 +31,6 @@ public class App {
             return null;
         }
 
-        Scanner s = new Scanner(System.in);
         System.out.print("Enter number of committees to assign lecturer to (0 for none): ");
         int numToAssign = s.nextInt();
         s.nextLine();
@@ -59,7 +58,6 @@ public class App {
 
     public static Lecturer createLecturer(CollegeManagement college) {
         System.out.println("--- Creating a new Lecturer ---");
-        Scanner s = new Scanner(System.in);
         
         String lecturerName;
         do {
@@ -117,7 +115,6 @@ public class App {
         }
     
         System.out.print("Would you like to assign a department to this lecturer? (yes/no): ");
-        Scanner s = new Scanner(System.in);
         String answer = s.nextLine();
     
         if (!answer.equalsIgnoreCase("yes")) {
@@ -131,7 +128,6 @@ public class App {
     public static Department getValidatedDepartmentByName(CollegeManagement college) {
         Department department;
         String depName;
-        Scanner s = new Scanner(System.in);
     
         do {
             System.out.print("Enter department name: ");
@@ -150,7 +146,6 @@ public class App {
     // Committee Creation functions
     // ***************************************
     public static Lecturer getValidatedChairperson(CollegeManagement college) {
-        Scanner s = new Scanner(System.in);
         Lecturer chairPerson = null;
     
         do {
@@ -180,8 +175,6 @@ public class App {
             return null;
         }
         
-        
-        Scanner s = new Scanner(System.in);
         System.out.print("Enter committee name: ");
         String committeeName = s.nextLine();
         
@@ -234,17 +227,16 @@ public class App {
     
     
     public static void assignLectToCommittee(CollegeManagement college){
-        Scanner s = new Scanner(System.in);
         String lecturerName, commName;
         Lecturer lecturer;
         do {
             System.out.print("Enter lecturer name: ");
             lecturerName = s.nextLine();
             lecturer = college.findLecturerByName(lecturerName);
-            if (lecturer!=null) {
-                System.out.println("Lecturer name already exists! Please enter a new name.");
+            if (lecturer == null) {
+                System.out.println("Lecturer not found. Please enter an existing name.");
             }
-        } while (lecturer!=null);
+        } while (lecturer == null);
           
         Committee committee;
         do {
@@ -257,11 +249,69 @@ public class App {
             }
         } while (committee == null);
         
-
-        college.addLecturer(lecturer, committee.getLecturers());
-        //important: in object committie assign the lecturer aswell
+       
+        committee.addMember(lecturer); // assign the lecturer to the committee
+        lecturer.addCommittee(committee); // assign the committie to the list of lecturer's committies
     }
 
+
+
+
+    public static void assignNewCommittieHead(CollegeManagement college){
+        String lecturerName, commName;
+        Lecturer lecturer;
+        do {
+            System.out.print("Enter lecturer name: ");
+            lecturerName = s.nextLine();
+            lecturer = college.findLecturerByName(lecturerName);
+            if (lecturer == null) {
+                System.out.println("Lecturer not found. Please enter an existing name.");
+            }
+        } while (lecturer == null);
+          
+        Committee committee;
+        do {
+            System.out.print("Enter committee name: ");
+            commName = s.nextLine();
+            committee = college.findCommitteeByName(commName);
+    
+            if (committee == null) {
+                System.out.println("Committee not found. Please enter an existing committee name.");
+            }
+        } while (committee == null);
+        
+       
+        committee.updateCommitteeChair(lecturer);;
+    }
+
+
+    public static void removeMemberFromCommittie(CollegeManagement college){
+        String lecturerName, commName;
+        Lecturer lecturer;
+        do {
+            System.out.print("Enter lecturer name: ");
+            lecturerName = s.nextLine();
+            lecturer = college.findLecturerByName(lecturerName);
+            if (lecturer == null) {
+                System.out.println("Lecturer not found. Please enter an existing name.");
+            }
+        } while (lecturer == null);
+          
+        Committee committee;
+        do {
+            System.out.print("Enter committee name: ");
+            commName = s.nextLine();
+            committee = college.findCommitteeByName(commName);
+    
+            if (committee == null) {
+                System.out.println("Committee not found. Please enter an existing committee name.");
+            }
+        } while (committee == null);
+
+        committee.removeLecturer(lecturer);
+    }
+
+    
     // ***************************************
     // Department Creation functions
     // ***************************************
@@ -272,7 +322,6 @@ public class App {
     
     public static void main(String[] args){
          // Submitters: Priel Krishtal , Liad Albocher
-        Scanner s = new Scanner(System.in);
         System.out.print("Enter Collage name:");
 		String collegeName = s.nextLine();
         CollegeManagement college = new CollegeManagement(collegeName);
@@ -317,9 +366,11 @@ public class App {
                     break;
                 case 4:
                     // Update head of committee
+                    assignNewCommittieHead(college);
                     break;
                 case 5:
                     // Remove a member from the committee
+                    removeMemberFromCommittie(college);
                     break;
                 case 6:
                     // Add department

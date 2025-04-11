@@ -56,6 +56,7 @@ public class CollegeManagement {
     // ***************************************
     // Lecturer functions
     // ***************************************
+    
     public Lecturer[] addLecturer(Lecturer lecturer,Lecturer[] arrLect) {
         if (numLecturers >= arrLect.length) {
             arrLect = resizeLecturerArray(arrLect);
@@ -98,6 +99,7 @@ public class CollegeManagement {
         return null;
     }
     
+    
     public Committee[] addCommittee(Committee committee,Committee[] arrComm){
         if (numCommittees >= arrComm.length) {
             arrComm = resizeCommitteesArray(arrComm);
@@ -128,18 +130,6 @@ public class CollegeManagement {
         return null;
     }
     
-    
-
-    
-    
-    
-    
-    
-
-   
-
-    
-
     
 
 }

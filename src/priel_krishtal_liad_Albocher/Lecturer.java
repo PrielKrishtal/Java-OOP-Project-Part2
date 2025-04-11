@@ -114,15 +114,41 @@ public class Lecturer {
     }
 
     public void setCommittees(Committee[] committees) {
-    this.committees = committees;
-    if (committees != null) {
-        this.numCommittees = committees.length;
-    } else {
-        this.numCommittees = 0;
+        this.committees = committees;
+        if (committees != null) {
+            this.numCommittees = committees.length;
+        } else {
+            this.numCommittees = 0;
+        }
     }
-}
 
+
+    public void addCommittee(Committee committee) {
+        // If the committees array hasn't been initialized yet, initialize it.
+        if (this.committees == null) {
+            this.committees = new Committee[1]; 
+            numCommittees = 0;
+        }
+        // Resize the committees array if it's full.
+        if (numCommittees >= committees.length) {
+            committees = resizeCommitteeArray(committees);
+        }
+        // Add the new committee and update the number of committees.
+        committees[numCommittees++] = committee;
+        System.out.println("Committee " + committee.getName() + " added to lecturer " + this.getName());
+    }
     
+    /**
+     * Private helper method to double the size of the committees array.
+     */
+    private Committee[] resizeCommitteeArray(Committee[] arr) {
+        Committee[] newArr = new Committee[arr.length * 2];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i]; // Copy each existing committee into the new array.
+        }
+        return newArr;
+    }
     
+
     
 }
