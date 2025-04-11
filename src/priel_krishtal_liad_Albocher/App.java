@@ -316,6 +316,45 @@ public class App {
     // Department Creation functions
     // ***************************************
     
+    public static Department createDepartment(CollegeManagement college){
+        boolean isValidInput = false;
+        System.out.println("--- Creating a new department ---\n");
+        System.out.println("Enter new department's name: ");
+        String depName = s.nextLine();
+        //validate name
+        while(!isValidInput){
+            if(college.findDepartmentByName(depName) == null){
+                isValidInput = true;
+                break;
+            }
+            System.out.println("Departments name already exists! Please enter a new name.");
+            depName = s.nextLine();
+        }
+        //validate num of students
+        isValidInput = false;
+        System.out.println("Enter the number of students in the department");
+        int numOfStudents = s.nextInt();
+        while (numOfStudents < 0) {
+            System.out.println("invalid number of students, please try again.");
+            numOfStudents = s.nextInt();
+        }
+        //insert lects
+        Lecturer[] lecturersInDepartment = lecturersInDepartment(college, depName);
+
+        return new Department(depName, numOfStudents, lecturersInDepartment);
+    }
+
+    public static Lecturer[] lecturersInDepartment(CollegeManagement c1, String depName){
+        Lecturer[] allLect = c1.getLecturers();
+        Lecturer[] lecturersInTheDepartment = new Lecturer[0];
+        for (int i = 0; i < c1.getNumLecturers(); i++){
+            if(allLect[i].getDepartment().getName() == depName){
+                c1.addLecturer(allLect[i],lecturersInTheDepartment);
+            }
+        }
+
+        return lecturersInTheDepartment;
+    }
 
     
     
@@ -325,6 +364,7 @@ public class App {
         System.out.print("Enter Collage name:");
 		String collegeName = s.nextLine();
         CollegeManagement college = new CollegeManagement(collegeName);
+        college.setCollegeName(collegeName);
         int choice;
         do{
             
@@ -374,6 +414,9 @@ public class App {
                     break;
                 case 6:
                     // Add department
+                    Department newDepartment = createDepartment(college);
+                    college.setDepartments(college.addDepartment(newDepartment,college.getDepartments()));
+                    System.out.println(newDepartment.toString());
                     break;
                 case 7:
                     // Show Average Salary of All Lecturers
