@@ -1,6 +1,5 @@
 package priel_krishtal_liad_Albocher;
 
-import java.util.Scanner;
 
 public class Committee {
     private String name;
