@@ -1,5 +1,4 @@
 package priel_krishtal_liad_Albocher;
-import java.util.Scanner;
 public class CollegeManagement {
     private String collegeName;
     private Lecturer[] lecturers;
@@ -15,6 +14,10 @@ public class CollegeManagement {
         numLecturers = 0;
         numDepartments = 0;
         numCommittees = 0;
+    }
+
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
     }
 
     public Lecturer[] getLecturers() {
@@ -130,6 +133,23 @@ public class CollegeManagement {
         return null;
     }
     
+    public Department[] addDepartment(Department Department,Department[] arrComm){
+        if (numDepartments >= arrComm.length) {
+            arrComm = resizeDepartmentArray(arrComm);
+        }
+        arrComm[numDepartments++] = Department;
+        return arrComm;
+        
+    }
+   
+
+    public static Department[] resizeDepartmentArray(Department[] arr) {
+        Department[] newArr = new Department[arr.length * 2];
+        for (int i = 0; i < arr.length; i++) {
+            newArr[i] = arr[i];
+        }
+        return newArr;
+    }
     
 
 }
